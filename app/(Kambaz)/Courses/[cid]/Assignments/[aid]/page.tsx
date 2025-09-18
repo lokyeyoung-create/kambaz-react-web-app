@@ -6,14 +6,13 @@ export default function AssignmentEditor() {
       <input id="wd-name" defaultValue="A1 - ENV + HTML" />
       <br />
       <br />
-      <textarea rows={5} cols={50} id="wd-description">
-        The assignment is available online Submit a link to the landing page of
-        your Web application running on Netlify. The landing page should include
-        the following: Your full name and section Links to each of the lab
-        assignments Link to the Kanbas application Links to all relevant source
-        code repositories The Kanbas application should include a link to
-        navigate back to the landing page.
-      </textarea>
+      <textarea
+        id="wd-description"
+        rows={8}
+        cols={50}
+        defaultValue="The assignment is available online Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section Links to each of the lab assignments Link to the Kanbas application Links to all relevant source code repositories The Kanbas application should include a link to navigate back to the landing page."
+      />
+
       <br />
       <table>
         <tbody>
@@ -31,9 +30,7 @@ export default function AssignmentEditor() {
             </td>
             <td>
               <select id="wd-group">
-                <option value="ASSIGNMENTS" selected>
-                  ASSIGNMENTS
-                </option>
+                <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                 <option value="QUIZZES">QUIZZES</option>
                 <option value="EXAMS">EXAMS</option>
                 <option value="PROJECT">PROJECT</option>
@@ -46,9 +43,7 @@ export default function AssignmentEditor() {
             </td>
             <td>
               <select id="wd-display-grade-as">
-                <option value="PERCENTAGE" selected>
-                  Percentage
-                </option>
+                <option value="PERCENTAGE">Percentage</option>
                 <option value="POINTS">Points</option>
                 <option value="LETTER">Letter Grade</option>
               </select>
@@ -60,9 +55,7 @@ export default function AssignmentEditor() {
             </td>
             <td>
               <select id="wd-submission-type">
-                <option value="ONLINE" selected>
-                  Online
-                </option>
+                <option value="ONLINE">Online</option>
                 <option value="PAPER">On Paper</option>
               </select>
             </td>
@@ -88,7 +81,6 @@ export default function AssignmentEditor() {
               <label htmlFor="wd-file-upload">File Uploads</label>
               <br />
             </td>
-            
           </tr>
           <tr>
             <td>
@@ -140,7 +132,6 @@ export default function AssignmentEditor() {
       </table>
       <br />
 
-     
       <hr />
       <button>Cancel</button>
       <button>Save</button>
