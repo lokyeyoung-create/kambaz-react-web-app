@@ -9,15 +9,105 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} alt="React" />
+            <Image src="/file.svg" width={15} height={15} alt="React" />
             <div>
               <h5>CS1234 React JS</h5>
-              <p className="wd-dashboard-course-title">Full Stack software developer</p>
+              <p className="wd-dashboard-course-title">
+                Full Stack software developer
+              </p>
               <button>Go</button>
             </div>
           </Link>
         </div>
-        {/* Add at least 6 more courses here with <Link>, <Image>, etc. */}
+
+        <div className="wd-dashboard-course">
+          <Link href="/Courses/5678" className="wd-dashboard-course-link">
+            <Image src="/globe.svg" width={15} height={15} alt="Node.js" />
+            <div>
+              <h5>CS5678 Node.js</h5>
+              <p className="wd-dashboard-course-title">
+                Backend Development with Node.js
+              </p>
+              <button>Go</button>
+            </div>
+          </Link>
+        </div>
+
+        <div className="wd-dashboard-course">
+          <Link href="/Courses/9101" className="wd-dashboard-course-link">
+            <Image src="/file.svg" width={15} height={15} alt="MongoDB" />
+            <div>
+              <h5>CS9101 MongoDB</h5>
+              <p className="wd-dashboard-course-title">NoSQL Database Design</p>
+              <button>Go</button>
+            </div>
+          </Link>
+        </div>
+
+        <div className="wd-dashboard-course">
+          <Link href="/Courses/1121" className="wd-dashboard-course-link">
+            <Image src="/window.svg" width={15} height={15} alt="Python" />
+            <div>
+              <h5>CS1121 Python</h5>
+              <p className="wd-dashboard-course-title">
+                Data Science with Python
+              </p>
+              <button>Go</button>
+            </div>
+          </Link>
+        </div>
+
+        <div className="wd-dashboard-course">
+          <Link href="/Courses/3141" className="wd-dashboard-course-link">
+            <Image src="/globe.svg" width={15} height={15} alt="JavaScript" />
+            <div>
+              <h5>CS3141 JavaScript</h5>
+              <p className="wd-dashboard-course-title">
+                Modern JavaScript Development
+              </p>
+              <button>Go</button>
+            </div>
+          </Link>
+        </div>
+
+        <div className="wd-dashboard-course">
+          <Link href="/Courses/5161" className="wd-dashboard-course-link">
+            <Image src="/globe.svg" width={15} height={15} alt="CSS" />
+            <div>
+              <h5>CS5161 CSS</h5>
+              <p className="wd-dashboard-course-title">
+                Advanced CSS and Responsive Design
+              </p>
+              <button>Go</button>
+            </div>
+          </Link>
+        </div>
+
+        <div className="wd-dashboard-course">
+          <Link href="/Courses/7181" className="wd-dashboard-course-link">
+            <Image src="/globe.svg" width={15} height={15} alt="HTML" />
+            <div>
+              <h5>CS7181 HTML</h5>
+              <p className="wd-dashboard-course-title">
+                Web Foundations and Semantic HTML
+              </p>
+              <button>Go</button>
+            </div>
+          </Link>
+        </div>
+
+        <div className="wd-dashboard-course">
+          <Link href="/Courses/9202" className="wd-dashboard-course-link">
+            <Image src="/globe.svg" width={15} height={15} alt="TypeScript" />
+            <div>
+              <h5>CS9202 TypeScript</h5>
+              <p className="wd-dashboard-course-title">
+                Type-Safe JavaScript Development
+              </p>
+              <button>Go</button>
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
