@@ -26,6 +26,11 @@ export default function Labs() {
             Kambaz
           </Link>
         </li>
+        <li>
+          <Link href="https://github.com/lokyeyoung-create/kambaz-react-web-app" id="wd-github-link">
+            Source Code
+          </Link>
+        </li>
       </ul>
     </div>
   );
