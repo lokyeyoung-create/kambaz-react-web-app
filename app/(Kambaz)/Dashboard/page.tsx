@@ -21,7 +21,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <Link href="/Courses/5678" className="wd-dashboard-course-link">
+          <Link href="/Courses/1234" className="wd-dashboard-course-link">
             <Image src="/globe.svg" width={15} height={15} alt="Node.js" />
             <div>
               <h5>CS5678 Node.js</h5>
@@ -34,7 +34,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <Link href="/Courses/9101" className="wd-dashboard-course-link">
+          <Link href="/Courses/1234" className="wd-dashboard-course-link">
             <Image src="/file.svg" width={15} height={15} alt="MongoDB" />
             <div>
               <h5>CS9101 MongoDB</h5>
@@ -45,7 +45,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <Link href="/Courses/1121" className="wd-dashboard-course-link">
+          <Link href="/Courses/1234" className="wd-dashboard-course-link">
             <Image src="/window.svg" width={15} height={15} alt="Python" />
             <div>
               <h5>CS1121 Python</h5>
@@ -58,7 +58,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <Link href="/Courses/3141" className="wd-dashboard-course-link">
+          <Link href="/Courses/1234" className="wd-dashboard-course-link">
             <Image src="/globe.svg" width={15} height={15} alt="JavaScript" />
             <div>
               <h5>CS3141 JavaScript</h5>
@@ -71,7 +71,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <Link href="/Courses/5161" className="wd-dashboard-course-link">
+          <Link href="/Courses/1234" className="wd-dashboard-course-link">
             <Image src="/globe.svg" width={15} height={15} alt="CSS" />
             <div>
               <h5>CS5161 CSS</h5>
@@ -84,7 +84,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <Link href="/Courses/7181" className="wd-dashboard-course-link">
+          <Link href="/Courses/1234" className="wd-dashboard-course-link">
             <Image src="/globe.svg" width={15} height={15} alt="HTML" />
             <div>
               <h5>CS7181 HTML</h5>
@@ -97,7 +97,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <Link href="/Courses/9202" className="wd-dashboard-course-link">
+          <Link href="/Courses/1234" className="wd-dashboard-course-link">
             <Image src="/globe.svg" width={15} height={15} alt="TypeScript" />
             <div>
               <h5>CS9202 TypeScript</h5>

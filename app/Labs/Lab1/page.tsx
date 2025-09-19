@@ -106,6 +106,48 @@ export default function Lab1() {
               <td>2/20/21</td>
               <td>70</td>
             </tr>
+            <tr>
+              <td>Q4</td>
+              <td>React</td>
+              <td>2/27/21</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>Q5</td>
+              <td>Node.js</td>
+              <td>3/6/21</td>
+              <td>92</td>
+            </tr>
+            <tr>
+              <td>Q6</td>
+              <td>MongoDB</td>
+              <td>3/13/21</td>
+              <td>78</td>
+            </tr>
+            <tr>
+              <td>Q7</td>
+              <td>Express</td>
+              <td>3/20/21</td>
+              <td>84</td>
+            </tr>
+            <tr>
+              <td>Q8</td>
+              <td>TypeScript</td>
+              <td>3/27/21</td>
+              <td>91</td>
+            </tr>
+            <tr>
+              <td>Q9</td>
+              <td>GraphQL</td>
+              <td>4/3/21</td>
+              <td>87</td>
+            </tr>
+            <tr>
+              <td>Q10</td>
+              <td>Docker</td>
+              <td>4/10/21</td>
+              <td>89</td>
+            </tr>
           </tbody>
           <tfoot>
             <tr>
