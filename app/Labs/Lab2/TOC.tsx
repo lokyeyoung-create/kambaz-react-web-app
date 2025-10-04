@@ -28,9 +28,14 @@ export default function TOC() {
           Kambaz
         </NavLink>
       </NavItem>
-      <NavItem>
-        <NavLink href="https://github.com/jannunzi">My GitHub</NavLink>
-      </NavItem>
+      <a
+        id="wd-github"
+        href="https://github.com/lokyeyoung-create/kambaz-react-web-app"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub Repository
+      </a>
     </Nav>
   );
 }
