@@ -5,7 +5,7 @@ import { FaCheckCircle, FaBell, FaChartBar } from "react-icons/fa";
 import { BiImport } from "react-icons/bi";
 import { LiaFileImportSolid } from "react-icons/lia";
 import { AiOutlineHome } from "react-icons/ai";
-import { IoMegaphoneOutline, IoAnalyticsOutline } from "react-icons/io5";
+import { IoAnalyticsOutline } from "react-icons/io5";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { Button } from "react-bootstrap";
 

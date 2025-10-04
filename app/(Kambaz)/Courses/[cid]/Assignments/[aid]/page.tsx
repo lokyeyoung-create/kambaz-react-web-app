@@ -9,7 +9,7 @@ export default function AssignmentEditor({
 }: {
   params: Promise<{ cid: string; aid: string }>;
 }) {
-  const { cid, aid } = use(params);
+  const { cid } = use(params);
 
   return (
     <div

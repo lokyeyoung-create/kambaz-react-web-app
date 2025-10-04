@@ -12,7 +12,7 @@ import {
 import FormRange from "react-bootstrap/esm/FormRange";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
 
-export default function () {
+export default function BootstrapForms() {
   return (
     <div>
       <div id="wd-css-styling-forms">
