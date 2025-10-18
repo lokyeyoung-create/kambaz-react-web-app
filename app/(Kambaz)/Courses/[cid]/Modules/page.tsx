@@ -11,7 +11,7 @@ export default function Modules() {
   const { cid } = useParams();
   const modules = db.modules;
   
-  const courseModules = modules.filter((module: any) => module.course === cid);
+  const courseModules = modules.filter((module) => module.course === cid);
 
   return (
     <div>
@@ -19,7 +19,7 @@ export default function Modules() {
       <br /><br /><br /><br />
       
       <ListGroup id="wd-modules" className="rounded-0">
-        {courseModules.map((module: any) => (
+        {courseModules.map((module) => (
           <ListGroupItem 
             key={module._id} 
             className="wd-module p-0 mb-5 fs-5 border-gray"
@@ -31,7 +31,7 @@ export default function Modules() {
             </div>
             {module.lessons && (
               <ListGroup className="wd-lessons rounded-0">
-                {module.lessons.map((lesson: any) => (
+                {module.lessons.map((lesson) => (
                   <ListGroupItem 
                     key={lesson._id} 
                     className="wd-lesson p-3 ps-1"

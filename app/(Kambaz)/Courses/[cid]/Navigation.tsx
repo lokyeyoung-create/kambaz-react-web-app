@@ -12,7 +12,7 @@ export default function CourseNavigation({ cid }: { cid: string }) {
         <Link
           key={link}
           href={`/Courses/${cid}/${link}`}
-          className={`list-group-item border border-0 ${
+          className={`list-group-item border-0 ${
             pathname.includes(link) ? "active" : "text-danger"
           }`}
         >

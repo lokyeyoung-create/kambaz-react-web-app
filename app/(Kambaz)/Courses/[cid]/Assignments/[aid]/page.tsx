@@ -8,7 +8,7 @@ export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   
   // Find the specific assignment using the aid parameter
-  const assignment = assignments.find((a: any) => a._id === aid);
+  const assignment = assignments.find((a) => a._id === aid);
   
   if (!assignment) {
     return (

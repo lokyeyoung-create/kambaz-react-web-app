@@ -1,23 +1,25 @@
 export default function BooleanVariables() {
-  let numberVariable = 123, floatingPointNumber = 234.345;
-  let true1 = true, false1 = false;
-  let false2 = true1 && false1;
-  let true2 = true1 || false1;
-  let true3 = !false2;
-  let true4 = numberVariable === 123;
-  let true5 = floatingPointNumber !== 321.432;
-  let false3 = numberVariable < 100;
-  
+  const numberVariable = 123;
+  const true1 = true;
+  const false1 = false;
+  const false2 = true1 && false1;
+  const true2 = true1 || false1;
+  const true3 = !false2;
+  const true4 = numberVariable === 123;
+  const floatingPointNumber: number = 234.345;
+  const true5 = floatingPointNumber !== 321.432;
+  const false3 = numberVariable < 100;
+
   return (
     <div id="wd-boolean-variables">
       <h4>Boolean Variables</h4>
-      true1  = {true1 + ""}  <br />
+      true1 = {true1 + ""} <br />
       false1 = {false1 + ""} <br />
       false2 = {false2 + ""} <br />
-      true2  = {true2 + ""}  <br />
-      true3  = {true3 + ""}  <br />
-      true4  = {true4 + ""}  <br />
-      true5  = {true5 + ""}  <br />
+      true2 = {true2 + ""} <br />
+      true3 = {true3 + ""} <br />
+      true4 = {true4 + ""} <br />
+      true5 = {true5 + ""} <br />
       false3 = {false3 + ""} <hr />
     </div>
   );

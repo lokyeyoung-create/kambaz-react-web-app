@@ -13,7 +13,7 @@ export default function Assignments() {
   
   // Filter assignments for the current course
   const courseAssignments = assignments.filter(
-    (assignment: any) => assignment.course === cid
+    (assignment) => assignment.course === cid
   );
 
   // Format date for display
@@ -52,10 +52,10 @@ export default function Assignments() {
       </div>
 
       <div className="list-group rounded-0">
-        {courseAssignments.map((assignment: any) => (
+        {courseAssignments.map((assignment) => (
           <div 
             key={assignment._id} 
-            className="list-group-item border-0 border-start border-success border-3"
+            className="list-group-item border-start border-success border-3"
           >
             <div className="d-flex justify-content-between align-items-start">
               <div className="d-flex">
