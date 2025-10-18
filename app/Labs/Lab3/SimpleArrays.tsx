@@ -8,7 +8,7 @@ export default function SimpleArrays() {
     <li key={1}>Buy milk</li>,
     <li key={2}>Feed the pets</li>
   ];
-  let variableArray1 = [
+  const variableArray1 = [
     functionScoped,
     blockScoped,
     constant1,
