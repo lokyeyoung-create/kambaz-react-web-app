@@ -1,25 +1,43 @@
 "use client";
-import { useParams } from "next/navigation";
-import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { assignments } from "@/app/(Kambaz)/Database";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../../store";
+import { addAssignment, updateAssignment } from "../reducer";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
   
-  // Find the specific assignment using the aid parameter
-  const assignment = assignments.find((a) => a._id === aid);
+  // Check if user is faculty
+  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN";
   
-  if (!assignment) {
-    return (
-      <div className="container-fluid">
-        <h3>Assignment not found</h3>
-        <Link href={`/Courses/${cid}/Assignments`}>
-          <Button variant="secondary">Back to Assignments</Button>
-        </Link>
-      </div>
-    );
-  }
+  // Redirect students who try to access editor
+  useEffect(() => {
+    if (!isFaculty) {
+      router.push(`/Courses/${cid}/Assignments`);
+    }
+  }, [isFaculty, cid, router]);
+  
+  // Check if creating new or editing existing
+  const isNewAssignment = aid === "new";
+  const existingAssignment = assignments.find((a: any) => a._id === aid);
+  
+  // Initialize form state
+  const [assignment, setAssignment] = useState({
+    _id: isNewAssignment ? "" : existingAssignment?._id || "",
+    title: isNewAssignment ? "New Assignment" : existingAssignment?.title || "",
+    course: cid as string,
+    description: isNewAssignment ? "" : existingAssignment?.description || "",
+    points: isNewAssignment ? 100 : existingAssignment?.points || 100,
+    dueDate: isNewAssignment ? "" : existingAssignment?.dueDate || "",
+    availableDate: isNewAssignment ? "" : existingAssignment?.availableDate || "",
+    availableUntil: isNewAssignment ? "" : existingAssignment?.availableUntil || "",
+  });
 
   // Format datetime for input fields
   const formatDateTimeForInput = (dateString: string) => {
@@ -27,6 +45,23 @@ export default function AssignmentEditor() {
     const date = new Date(dateString);
     return date.toISOString().slice(0, 16);
   };
+
+  const handleSave = () => {
+    if (isNewAssignment) {
+      dispatch(addAssignment(assignment));
+    } else {
+      dispatch(updateAssignment(assignment));
+    }
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+
+  const handleCancel = () => {
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+
+  if (!isFaculty) {
+    return null; // Will redirect in useEffect
+  }
 
   return (
     <div id="wd-assignments-editor" className="container-fluid" style={{ maxWidth: "800px" }}>
@@ -36,14 +71,17 @@ export default function AssignmentEditor() {
       <input
         id="wd-name"
         className="form-control mb-4"
-        defaultValue={assignment.title}
+        value={assignment.title}
+        onChange={(e) => setAssignment({ ...assignment, title: e.target.value })}
       />
 
       <textarea
         id="wd-description"
         className="form-control mb-4"
         rows={10}
-        defaultValue={assignment.description}
+        value={assignment.description}
+        onChange={(e) => setAssignment({ ...assignment, description: e.target.value })}
+        placeholder="Enter assignment description..."
       />
 
       <div className="row mb-3">
@@ -57,7 +95,8 @@ export default function AssignmentEditor() {
             id="wd-points"
             type="number"
             className="form-control"
-            defaultValue={assignment.points}
+            value={assignment.points}
+            onChange={(e) => setAssignment({ ...assignment, points: parseInt(e.target.value) || 0 })}
           />
         </div>
       </div>
@@ -75,7 +114,8 @@ export default function AssignmentEditor() {
               <input 
                 id="wd-assign-to" 
                 className="form-control" 
-                defaultValue="Everyone" 
+                value="Everyone"
+                disabled
               />
             </div>
 
@@ -87,7 +127,8 @@ export default function AssignmentEditor() {
                 id="wd-due-date"
                 type="datetime-local"
                 className="form-control"
-                defaultValue={formatDateTimeForInput(assignment.dueDate)}
+                value={formatDateTimeForInput(assignment.dueDate)}
+                onChange={(e) => setAssignment({ ...assignment, dueDate: e.target.value })}
               />
             </div>
 
@@ -100,7 +141,8 @@ export default function AssignmentEditor() {
                   id="wd-available-from"
                   type="datetime-local"
                   className="form-control"
-                  defaultValue={formatDateTimeForInput(assignment.availableDate)}
+                  value={formatDateTimeForInput(assignment.availableDate)}
+                  onChange={(e) => setAssignment({ ...assignment, availableDate: e.target.value })}
                 />
               </div>
               <div className="col-6">
@@ -111,7 +153,8 @@ export default function AssignmentEditor() {
                   id="wd-available-until"
                   type="datetime-local"
                   className="form-control"
-                  defaultValue={formatDateTimeForInput(assignment.availableUntil)}
+                  value={formatDateTimeForInput(assignment.availableUntil)}
+                  onChange={(e) => setAssignment({ ...assignment, availableUntil: e.target.value })}
                 />
               </div>
             </div>
@@ -122,12 +165,19 @@ export default function AssignmentEditor() {
       <hr className="my-4" />
 
       <div className="d-flex justify-content-end">
-        <Link href={`/Courses/${cid}/Assignments`}>
-          <Button variant="secondary" className="me-2">Cancel</Button>
-        </Link>
-        <Link href={`/Courses/${cid}/Assignments`}>
-          <Button variant="danger">Save</Button>
-        </Link>
+        <Button 
+          variant="secondary" 
+          className="me-2"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+        <Button 
+          variant="danger"
+          onClick={handleSave}
+        >
+          Save
+        </Button>
       </div>
     </div>
   );

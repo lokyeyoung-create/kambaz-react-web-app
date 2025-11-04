@@ -1,15 +1,15 @@
+"use client";
+import { ReactNode } from "react";
 import AccountNavigation from "./Navigation";
 
-export default function AccountLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AccountLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="d-flex">
-      <AccountNavigation />
-      <div className="flex-grow-1" style={{ marginLeft: "200px" }}>
-        {children}
+    <div id="wd-account-screen">
+      <div className="d-flex">
+        <div className="d-none d-md-block">
+          <AccountNavigation />
+        </div>
+        <div className="flex-fill p-3">{children}</div>
       </div>
     </div>
   );
