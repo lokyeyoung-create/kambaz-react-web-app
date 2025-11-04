@@ -29,11 +29,12 @@ export default function Profile() {
 
   const signout = () => {
     dispatch(setCurrentUser(null));
-    router.push("/Account/Signin"); 
+    router.push("/Account/Signin");
   };
 
   useEffect(() => {
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

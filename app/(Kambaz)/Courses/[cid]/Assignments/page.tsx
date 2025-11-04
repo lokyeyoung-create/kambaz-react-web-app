@@ -14,29 +14,36 @@ import { deleteAssignment } from "./reducer";
 export default function Assignments() {
   const { cid } = useParams();
   const dispatch = useDispatch();
-  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
-  
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentsReducer
+  );
+  const { currentUser } = useSelector(
+    (state: RootState) => state.accountReducer
+  );
+
   // State for delete confirmation modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignmentToDelete, setAssignmentToDelete] = useState<any>(null);
-  
+
   // Filter assignments for the current course
   const courseAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid
   );
 
   // Check if user is faculty/TA (can edit) or student (view only)
-  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN" || currentUser?.role === "TA";
+  const isFaculty =
+    currentUser?.role === "FACULTY" ||
+    currentUser?.role === "ADMIN" ||
+    currentUser?.role === "TA";
 
   // Format date for display
   const formatDate = (dateString: string) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'long', 
-      day: 'numeric',
-      year: 'numeric'
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
@@ -75,7 +82,11 @@ export default function Assignments() {
 
         {isFaculty && (
           <div>
-            <Button variant="secondary" className="me-2" id="wd-add-assignment-group">
+            <Button
+              variant="secondary"
+              className="me-2"
+              id="wd-add-assignment-group"
+            >
               <FaPlus className="me-1" /> Group
             </Button>
             <Link href={`/Courses/${cid}/Assignments/new`}>
@@ -89,8 +100,8 @@ export default function Assignments() {
 
       <div className="list-group rounded-0">
         {courseAssignments.map((assignment: any) => (
-          <div 
-            key={assignment._id} 
+          <div
+            key={assignment._id}
             className="list-group-item border-start border-success border-3"
           >
             <div className="d-flex justify-content-between align-items-start">
@@ -106,17 +117,19 @@ export default function Assignments() {
                   </Link>
                   <div className="small text-muted">
                     <span className="text-danger">Multiple Modules</span> |
-                    <strong> Not available until</strong> {formatDate(assignment.availableDate)} |
+                    <strong> Not available until</strong>{" "}
+                    {formatDate(assignment.availableDate)} |
                     <br />
-                    <strong>Due</strong> {formatDate(assignment.dueDate)} | {assignment.points || 0} pts
+                    <strong>Due</strong> {formatDate(assignment.dueDate)} |{" "}
+                    {assignment.points || 0} pts
                   </div>
                 </div>
               </div>
               <div className="d-flex align-items-center">
                 <FaCheckCircle className="text-success me-2" />
                 {isFaculty && (
-                  <FaTrash 
-                    className="text-danger me-2" 
+                  <FaTrash
+                    className="text-danger me-2"
                     style={{ cursor: "pointer" }}
                     onClick={() => handleDeleteClick(assignment)}
                   />
@@ -134,7 +147,8 @@ export default function Assignments() {
           <Modal.Title>Confirm Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to remove the assignment "{assignmentToDelete?.title}"?
+          Are you sure you want to remove the assignment &quot;
+          {assignmentToDelete?.title}&quot;?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={cancelDelete}>
