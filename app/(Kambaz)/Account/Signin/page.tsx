@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { setCurrentUser } from "../reducer";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as db from "../../Database";
 import { FormControl, Button } from "react-bootstrap";
+import * as client from "../client";
 
 type UserRole = "STUDENT" | "FACULTY" | "ADMIN" | "USER" | "TA";
 
@@ -25,6 +26,14 @@ interface User {
 }
 
 export default function Signin() {
+  useEffect(() => {
+    console.log("=== CLIENT DEBUG ===");
+    console.log("HTTP_SERVER:", process.env.NEXT_PUBLIC_HTTP_SERVER);
+    console.log(
+      "Full signin URL:",
+      `${process.env.NEXT_PUBLIC_HTTP_SERVER}/api/users/signin`
+    );
+  }, []);
   const [credentials, setCredentials] = useState<any>({
     username: "",
     password: "",
@@ -32,20 +41,11 @@ export default function Signin() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const signin = () => {
-    const typedUsers = db.users as User[];
-    const user = typedUsers.find(
-      (u) =>
-        u.username === credentials.username &&
-        u.password === credentials.password
-    );
-
-    if (!user) {
-      alert("Invalid credentials");
-      return;
-    }
+  const signin = async () => {
+    const user = await client.signin(credentials);
+    if (!user) return;
     dispatch(setCurrentUser(user));
-    router.push("/Dashboard");
+    redirect("/Dashboard");
   };
 
   return (

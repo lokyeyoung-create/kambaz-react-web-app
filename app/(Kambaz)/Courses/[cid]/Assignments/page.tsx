@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FaSearch, FaPlus, FaCheckCircle, FaTrash } from "react-icons/fa";
 import { BsGripVertical } from "react-icons/bs";
@@ -9,8 +9,11 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { FaFileLines } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { deleteAssignment } from "./reducer";
-
+import {
+  setAssignments,
+  deleteAssignment as deleteAssignmentAction,
+} from "./reducer";
+import * as coursesClient from "../../client";
 export default function Assignments() {
   const { cid } = useParams();
   const dispatch = useDispatch();
@@ -25,12 +28,25 @@ export default function Assignments() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignmentToDelete, setAssignmentToDelete] = useState<any>(null);
 
+  // Fetch assignments when component mounts
+  const fetchAssignments = async () => {
+    if (!cid) return;
+    const assignments = await coursesClient.findAssignmentsForCourse(
+      cid as string
+    );
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
   // Filter assignments for the current course
   const courseAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid
   );
 
-  // Check if user is faculty/TA (can edit) or student (view only)
+  // Check if user is faculty/TA
   const isFaculty =
     currentUser?.role === "FACULTY" ||
     currentUser?.role === "ADMIN" ||
@@ -52,9 +68,10 @@ export default function Assignments() {
     setShowDeleteModal(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (assignmentToDelete) {
-      dispatch(deleteAssignment(assignmentToDelete._id));
+      await coursesClient.deleteAssignment(assignmentToDelete._id);
+      dispatch(deleteAssignmentAction(assignmentToDelete._id));
     }
     setShowDeleteModal(false);
     setAssignmentToDelete(null);
