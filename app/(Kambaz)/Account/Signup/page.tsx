@@ -19,7 +19,7 @@ export default function Signup() {
     try {
       const currentUser = await client.signup(user);
       dispatch(setCurrentUser(currentUser));
-      router.push("/signin");
+      router.push("/Signin");
     } catch (error) {
       console.error("Signup failed:", error);
     }
