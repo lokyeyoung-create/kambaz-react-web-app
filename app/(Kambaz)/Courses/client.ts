@@ -1,4 +1,5 @@
 import axios from "axios";
+import { HTTP_SERVER } from "../Account/client";
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
 // Use one consistent server URL
@@ -6,7 +7,7 @@ const REMOTE_SERVER = process.env.NEXT_PUBLIC_REMOTE_SERVER || process.env.NEXT_
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const USERS_API = `${REMOTE_SERVER}/api/users`;
 const MODULES_API = `${REMOTE_SERVER}/api/modules`;
-const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignments`;
+const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignments`; // Add this line
 const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
 
 // Debug log to verify URLs
@@ -24,19 +25,6 @@ export const enrollInCourse = async (userId: string, courseId: string) => {
     courseId,
   });
   return response.data;
-};
-
-// Unenroll a user from a course
-export const unenrollFromCourse = async (userId: string, courseId: string) => {
-  try {
-    const response = await axiosWithCredentials.delete(
-      `${ENROLLMENTS_API}/${userId}/${courseId}`
-    );
-    return response.data;
-  } catch (error: any) {
-    console.error("Error unenrolling from course:", error.response || error);
-    throw error;
-  }
 };
 
 // Get all enrollments for a specific user
@@ -106,17 +94,25 @@ export const createModuleForCourse = async (courseId: string, module: any) => {
   return response.data;
 };
 
-export const updateModule = async (module: any) => {
-  const { data } = await axiosWithCredentials.put(`${MODULES_API}/${module._id}`, module);
-  return data;
+export const updateModule = async (courseId: string, module: any) => {
+ const { data } = await axios.put(
+   `${COURSES_API}/${courseId}/modules/${module._id}`,
+   module
+ );
+ return data;
 };
 
-export const deleteModule = async (moduleId: string) => {
-  const response = await axiosWithCredentials.delete(`${MODULES_API}/${moduleId}`);
-  return response.data;
+
+export const deleteModule = async (courseId: string, moduleId: string) => {
+ const response = await axios.delete(
+   `${COURSES_API}/${courseId}/modules/${moduleId}`
+ );
+ return response.data;
 };
+
 
 // ============ ASSIGNMENT FUNCTIONS ============
+// In your client.ts file
 export const findAssignmentsForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/assignments`);
   return response.data;
@@ -131,16 +127,38 @@ export const createAssignmentForCourse = async (courseId: string, assignment: an
 };
 
 export const updateAssignment = async (assignment: any) => {
-  const { data } = await axiosWithCredentials.put(`${ASSIGNMENTS_API}/${assignment._id}`, assignment);
-  return data;
+  const response = await axiosWithCredentials.put(
+    `${ASSIGNMENTS_API}/${assignment._id}`,
+    assignment
+  );
+  return response.data;
 };
 
 export const deleteAssignment = async (assignmentId: string) => {
-  const response = await axiosWithCredentials.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
+  const response = await axiosWithCredentials.delete(
+    `${ASSIGNMENTS_API}/${assignmentId}`
+  );
   return response.data;
 };
 
 export const findAssignmentById = async (assignmentId: string) => {
-  const response = await axios.get(`${ASSIGNMENTS_API}/${assignmentId}`);
+  const response = await axios.get(
+    `${ASSIGNMENTS_API}/${assignmentId}` 
+  );
+  return response.data;
+};
+
+export const enrollIntoCourse = async (userId: string, courseId: string) => {
+  const response = await axiosWithCredentials.post(`${USERS_API}/${userId}/courses/${courseId}`);
+  return response.data;
+};
+
+export const unenrollFromCourse = async (userId: string, courseId: string) => {
+  const response = await axiosWithCredentials.delete(`${USERS_API}/${userId}/courses/${courseId}`);
+  return response.data;
+};
+
+export const findUsersForCourse = async (courseId: string) => {
+  const response = await axios.get(`${COURSES_API}/${courseId}/users`);
   return response.data;
 };

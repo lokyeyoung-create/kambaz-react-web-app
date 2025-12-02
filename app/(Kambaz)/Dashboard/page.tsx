@@ -97,7 +97,7 @@ export default function Dashboard() {
     if (currentUser) {
       try {
         // First update the backend
-        await client.enrollInCourse(currentUser._id, courseId);
+        await client.enrollIntoCourse(currentUser._id, courseId);
         // Then update Redux state
         dispatch(enrollInCourse({ userId: currentUser._id, courseId }));
       } catch (error) {
@@ -144,10 +144,9 @@ export default function Dashboard() {
   const fetchCourses = async () => {
     try {
       console.log("Fetching courses...");
-      const fetchedCourses = await client.findMyCourses();
+      const fetchedCourses = await client.fetchAllCourses();
       console.log("Fetched courses from server:", fetchedCourses);
       dispatch(setCourses(fetchedCourses));
-      console.log("Dispatched setCourses action");
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
@@ -264,7 +263,7 @@ export default function Dashboard() {
             onClick={() => dispatch(toggleShowAllCourses())}
             className="mb-3"
           >
-            {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
+            {showAllCourses ? "My Courses" : "Show All Courses"}
           </Button>
         </div>
       )}
