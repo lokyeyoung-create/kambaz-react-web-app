@@ -21,6 +21,21 @@ export default function MultipleChoiceEditor({
   onSave,
   onCancel,
 }: MultipleChoiceEditorProps) {
+  const handleTypeChange = (newType: string) => {
+    let updatedQuestion = { ...question, type: newType };
+
+    // Reset question-specific fields based on type
+    if (newType === "true-false") {
+      updatedQuestion.correctAnswer = true;
+      updatedQuestion.choices = undefined;
+    } else if (newType === "fill-in-blank") {
+      updatedQuestion.correctAnswer = [""];
+      updatedQuestion.choices = undefined;
+    }
+
+    onChange(updatedQuestion);
+  };
+
   const handleAddChoice = () => {
     const newChoice: Choice = {
       _id: crypto.randomUUID(),
@@ -72,7 +87,18 @@ export default function MultipleChoiceEditor({
             />
           </Form.Group>
 
-          <Form.Group style={{ width: "150px" }}>
+          <Form.Group style={{ width: "200px" }} className="me-3">
+            <Form.Select
+              value={question.type}
+              onChange={(e) => handleTypeChange(e.target.value)}
+            >
+              <option value="multiple-choice">Multiple Choice</option>
+              <option value="true-false">True/False</option>
+              <option value="fill-in-blank">Fill in Blank</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group style={{ width: "100px" }}>
             <Form.Label className="mb-0 me-2">
               <strong>pts:</strong>
             </Form.Label>

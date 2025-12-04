@@ -14,6 +14,24 @@ export default function TrueFalseEditor({
   onSave,
   onCancel,
 }: TrueFalseEditorProps) {
+  const handleTypeChange = (newType: string) => {
+    let updatedQuestion = { ...question, type: newType };
+
+    // Reset question-specific fields based on type
+    if (newType === "multiple-choice") {
+      updatedQuestion.choices = [
+        { _id: crypto.randomUUID(), text: "", isCorrect: false },
+        { _id: crypto.randomUUID(), text: "", isCorrect: false },
+      ];
+      updatedQuestion.correctAnswer = undefined;
+    } else if (newType === "fill-in-blank") {
+      updatedQuestion.correctAnswer = [""];
+      updatedQuestion.choices = undefined;
+    }
+
+    onChange(updatedQuestion);
+  };
+
   return (
     <Card>
       <Card.Body>
@@ -27,7 +45,18 @@ export default function TrueFalseEditor({
             />
           </Form.Group>
 
-          <Form.Group style={{ width: "150px" }}>
+          <Form.Group style={{ width: "200px" }} className="me-3">
+            <Form.Select
+              value={question.type}
+              onChange={(e) => handleTypeChange(e.target.value)}
+            >
+              <option value="multiple-choice">Multiple Choice</option>
+              <option value="true-false">True/False</option>
+              <option value="fill-in-blank">Fill in Blank</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group style={{ width: "100px" }}>
             <Form.Label className="mb-0 me-2">
               <strong>pts:</strong>
             </Form.Label>
