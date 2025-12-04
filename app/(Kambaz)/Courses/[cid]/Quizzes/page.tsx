@@ -145,9 +145,18 @@ export default function Quizzes() {
     quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const displayedQuizzes = isFaculty
-    ? filteredQuizzes
-    : filteredQuizzes.filter((quiz: any) => quiz.published);
+  const displayedQuizzes = (
+    isFaculty
+      ? filteredQuizzes
+      : filteredQuizzes.filter((quiz: any) => quiz.published)
+  ).sort((a: any, b: any) => {
+    // Sort by availableDate, with quizzes without dates at the end
+    if (!a.availableDate) return 1;
+    if (!b.availableDate) return -1;
+    return (
+      new Date(a.availableDate).getTime() - new Date(b.availableDate).getTime()
+    );
+  });
 
   return (
     <div className="p-4">

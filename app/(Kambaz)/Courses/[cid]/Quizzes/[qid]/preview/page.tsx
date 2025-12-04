@@ -320,7 +320,33 @@ export default function QuizPreview() {
       </div>
     );
   }
-
+  {
+    quiz.oneQuestionAtTime && (
+      <Card className="mb-3">
+        <Card.Body>
+          <h5>Questions</h5>
+          <div className="d-flex flex-wrap gap-2">
+            {quiz.questions.map((q: any, idx: number) => (
+              <Button
+                key={q._id}
+                variant={
+                  idx === currentQuestionIndex
+                    ? "primary"
+                    : isQuestionAnswered(q._id)
+                    ? "outline-success"
+                    : "outline-secondary"
+                }
+                onClick={() => setCurrentQuestionIndex(idx)}
+                size="sm"
+              >
+                {idx + 1}
+              </Button>
+            ))}
+          </div>
+        </Card.Body>
+      </Card>
+    );
+  }
   if (!quiz.oneQuestionAtTime) {
     // Show all questions at once
     return (
