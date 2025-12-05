@@ -50,7 +50,7 @@ export default function AssignmentEditor() {
 
   const handleSave = async () => {
     if (isNewAssignment) {
-      const newAssignment = await coursesClient.createAssignmentForCourse(
+      const newAssignment = await coursesClient.createAssignment(
         cid as string,
         assignment
       );
