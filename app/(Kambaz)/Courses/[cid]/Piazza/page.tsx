@@ -16,7 +16,7 @@ export default function PiazzaPage() {
   const dispatch = useDispatch();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { posts, folders, selectedPost, selectedFolder, showSidebar, stats } = useSelector((state: any) => state.piazzaReducer);
+  const { posts, folders, selectedPost, selectedFolder, stats } = useSelector((state: any) => state.piazzaReducer);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,16 +95,14 @@ export default function PiazzaPage() {
       <FolderFilters folders={folders} selectedFolder={selectedFolder} onSelectFolder={handleFolderSelect} />
 
       <div className="d-flex flex-grow-1" style={{ minHeight: 0 }}>
-        {showSidebar && (
-          <PostsSidebar
-            posts={filteredPosts}
-            selectedPost={selectedPost}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            onSelectPost={handlePostSelect}
-            onNewPost={handleNewPostClick}
-          />
-        )}
+        <PostsSidebar
+          posts={filteredPosts}
+          selectedPost={selectedPost}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          onSelectPost={handlePostSelect}
+          onNewPost={handleNewPostClick}
+        />
 
         <div className="flex-grow-1 p-3 overflow-auto">
           {showNewPost ? (

@@ -58,13 +58,22 @@ export default function PostsSidebar({
   };
 
   return (
-    <div className="border-end d-flex flex-column" style={{ width: showSidebar ? "350px" : "40px", minWidth: showSidebar ? "350px" : "40px", transition: "width 0.3s" }}>
-      <div className="p-2 border-bottom d-flex align-items-center">
-        <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => dispatch(toggleSidebar())}>
+    <div className="border-end d-flex" style={{ width: showSidebar ? "350px" : "50px", minWidth: showSidebar ? "350px" : "50px", transition: "width 0.3s" }}>
+      {/* Toggle button - always visible */}
+      <div className="d-flex flex-column">
+        <button 
+          className="btn btn-sm btn-outline-secondary m-2" 
+          onClick={() => dispatch(toggleSidebar())}
+          title={showSidebar ? "Hide sidebar" : "Show sidebar"}
+        >
           {showSidebar ? <FaChevronLeft /> : <FaChevronRight />}
         </button>
-        {showSidebar && (
-          <>
+      </div>
+
+      {/* Sidebar content - only visible when expanded */}
+      {showSidebar && (
+        <div className="flex-grow-1 d-flex flex-column" style={{ minWidth: 0 }}>
+          <div className="p-2 border-bottom d-flex align-items-center">
             <button className="btn btn-danger btn-sm me-2" onClick={onNewPost}>New Post</button>
             <input
               type="text"
@@ -73,37 +82,35 @@ export default function PostsSidebar({
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
             />
-          </>
-        )}
-      </div>
+          </div>
 
-      {showSidebar && (
-        <div className="overflow-auto flex-grow-1">
-          {Object.entries(groupedPosts).map(([group, groupPosts]) =>
-            groupPosts.length > 0 && (
-              <div key={group}>
-                <div className="px-3 py-2 bg-light fw-bold small text-muted">{group}</div>
-                {groupPosts.map((post) => (
-                  <div
-                    key={post._id}
-                    className={`px-3 py-2 border-bottom ${selectedPost?._id === post._id ? "bg-primary bg-opacity-10" : ""}`}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => onSelectPost(post)}
-                  >
-                    <div className="d-flex justify-content-between align-items-start">
-                      <div className="flex-grow-1">
-                        <div className="fw-bold small text-truncate">{post.summary}</div>
-                        <div className="text-muted small">
-                          {post.author?.role === "FACULTY" ? "Instr" : "Stud"}: {post.details?.substring(0, 50)}...
+          <div className="overflow-auto flex-grow-1">
+            {Object.entries(groupedPosts).map(([group, groupPosts]) =>
+              groupPosts.length > 0 && (
+                <div key={group}>
+                  <div className="px-3 py-2 bg-light fw-bold small text-muted">{group}</div>
+                  {groupPosts.map((post) => (
+                    <div
+                      key={post._id}
+                      className={`px-3 py-2 border-bottom ${selectedPost?._id === post._id ? "bg-primary bg-opacity-10" : ""}`}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => onSelectPost(post)}
+                    >
+                      <div className="d-flex justify-content-between align-items-start">
+                        <div className="flex-grow-1" style={{ minWidth: 0 }}>
+                          <div className="fw-bold small text-truncate">{post.summary}</div>
+                          <div className="text-muted small text-truncate">
+                            {post.author?.role === "FACULTY" ? "Instr" : "Stud"}: {post.details?.substring(0, 50)}...
+                          </div>
                         </div>
+                        <small className="text-muted ms-2">{formatTime(post.createdAt)}</small>
                       </div>
-                      <small className="text-muted">{formatTime(post.createdAt)}</small>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )
-          )}
+                  ))}
+                </div>
+              )
+            )}
+          </div>
         </div>
       )}
     </div>
