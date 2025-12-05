@@ -3,7 +3,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div>
-      <h2>Hi, my name is Lok Ye.</h2>
+      <h2>Lok Ye Young, 202610_1</h2>
+      <h2>Arav Goyal, 202610_1</h2>
       <p>This is my lab and Kambaz project.</p>
       <Link href="/Labs" id="wd-lab-link">
         Click here to get to the Labs
