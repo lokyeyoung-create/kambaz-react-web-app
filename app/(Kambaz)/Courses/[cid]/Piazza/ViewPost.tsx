@@ -5,6 +5,7 @@ import { updatePost, deletePost as deletePostAction } from "./reducer";
 import * as client from "../../client";
 import FollowupDiscussion from "./FollowupDiscussion";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
+import { Dropdown } from "react-bootstrap";
 
 export default function ViewPost({
   post,
@@ -86,13 +87,19 @@ export default function ViewPost({
         <div className="d-flex align-items-center gap-2">
           <span className="badge bg-primary"><FaEye className="me-1" />{post.views} views</span>
           {canEdit && (
-            <div className="dropdown">
-              <button className="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">Actions</button>
-              <ul className="dropdown-menu">
-                <li><button className="dropdown-item" onClick={() => setIsEditing(true)}><FaEdit className="me-2" />Edit</button></li>
-                <li><button className="dropdown-item text-danger" onClick={handleDeletePost}><FaTrash className="me-2" />Delete</button></li>
-              </ul>
-            </div>
+            <Dropdown>
+              <Dropdown.Toggle variant="outline-secondary" size="sm">
+                Actions
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => setIsEditing(true)}>
+                  <FaEdit className="me-2" />Edit
+                </Dropdown.Item>
+                <Dropdown.Item className="text-danger" onClick={handleDeletePost}>
+                  <FaTrash className="me-2" />Delete
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           )}
         </div>
       </div>
@@ -116,20 +123,34 @@ export default function ViewPost({
         <>
           <div className="border rounded p-3 mb-3 bg-light">
             <h5 className="text-primary">Student's Answers</h5>
-            {post.studentAnswers?.map((answer: any) => (
-              <div key={answer._id} className="border-bottom py-2">
-                <div className="d-flex justify-content-between">
-                  <small className="text-muted">{answer.author?.firstName || "Student"} - {new Date(answer.createdAt).toLocaleString()}</small>
-                  {(isInstructor || currentUser?._id === answer.author?._id || currentUser?._id === answer.author) && (
-                    <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteAnswer("student", answer._id)}>
-                      <FaTrash />
-                    </button>
-                  )}
+            {post.studentAnswers?.length > 0 ? (
+              post.studentAnswers.map((answer: any) => (
+                <div key={answer._id} className="border-bottom py-2">
+                  <div className="d-flex justify-content-between">
+                    <small className="text-muted">{answer.author?.firstName || "Student"} - {new Date(answer.createdAt).toLocaleString()}</small>
+                    {(isInstructor || currentUser?._id === answer.author?._id || currentUser?._id === answer.author) && (
+                      <Dropdown>
+                        <Dropdown.Toggle variant="outline-secondary" size="sm">Actions</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item className="text-danger" onClick={() => handleDeleteAnswer("student", answer._id)}>
+                            <FaTrash className="me-2" />Delete
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
+                  </div>
+                  <div dangerouslySetInnerHTML={{ __html: answer.content }} />
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: answer.content }} />
-              </div>
-            ))}
-            {!isInstructor && post.studentAnswers?.length === 0 && (
+              ))
+            ) : (
+              !isInstructor && (
+                <div className="mt-2">
+                  <textarea className="form-control mb-2" rows={3} placeholder="Write your answer..." value={studentAnswer} onChange={(e) => setStudentAnswer(e.target.value)} />
+                  <button className="btn btn-primary btn-sm" onClick={() => handleAddAnswer("student")}>Submit Answer</button>
+                </div>
+              )
+            )}
+            {!isInstructor && post.studentAnswers?.length > 0 && (
               <div className="mt-2">
                 <textarea className="form-control mb-2" rows={3} placeholder="Write your answer..." value={studentAnswer} onChange={(e) => setStudentAnswer(e.target.value)} />
                 <button className="btn btn-primary btn-sm" onClick={() => handleAddAnswer("student")}>Submit Answer</button>
@@ -139,20 +160,34 @@ export default function ViewPost({
 
           <div className="border rounded p-3 mb-3 bg-light">
             <h5 className="text-danger">Instructor's Answers</h5>
-            {post.instructorAnswers?.map((answer: any) => (
-              <div key={answer._id} className="border-bottom py-2">
-                <div className="d-flex justify-content-between">
-                  <small className="text-muted">{answer.author?.firstName || "Instructor"} - {new Date(answer.createdAt).toLocaleString()}</small>
-                  {isInstructor && (
-                    <button className="btn btn-sm btn-outline-danger" onClick={() => handleDeleteAnswer("instructor", answer._id)}>
-                      <FaTrash />
-                    </button>
-                  )}
+            {post.instructorAnswers?.length > 0 ? (
+              post.instructorAnswers.map((answer: any) => (
+                <div key={answer._id} className="border-bottom py-2">
+                  <div className="d-flex justify-content-between">
+                    <small className="text-muted">{answer.author?.firstName || "Instructor"} - {new Date(answer.createdAt).toLocaleString()}</small>
+                    {isInstructor && (
+                      <Dropdown>
+                        <Dropdown.Toggle variant="outline-secondary" size="sm">Actions</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item className="text-danger" onClick={() => handleDeleteAnswer("instructor", answer._id)}>
+                            <FaTrash className="me-2" />Delete
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
+                  </div>
+                  <div dangerouslySetInnerHTML={{ __html: answer.content }} />
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: answer.content }} />
-              </div>
-            ))}
-            {isInstructor && post.instructorAnswers?.length === 0 && (
+              ))
+            ) : (
+              isInstructor && (
+                <div className="mt-2">
+                  <textarea className="form-control mb-2" rows={3} placeholder="Write your answer..." value={instructorAnswer} onChange={(e) => setInstructorAnswer(e.target.value)} />
+                  <button className="btn btn-primary btn-sm" onClick={() => handleAddAnswer("instructor")}>Submit Answer</button>
+                </div>
+              )
+            )}
+            {isInstructor && post.instructorAnswers?.length > 0 && (
               <div className="mt-2">
                 <textarea className="form-control mb-2" rows={3} placeholder="Write your answer..." value={instructorAnswer} onChange={(e) => setInstructorAnswer(e.target.value)} />
                 <button className="btn btn-primary btn-sm" onClick={() => handleAddAnswer("instructor")}>Submit Answer</button>
